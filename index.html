@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Api</title>
+</head>
+<body style="margin: 20px;">
+  <form>
+
+    Username <br>
+    <input type="text" name="username" id="username">
+    <br><br>
+    Password
+    <br>
+    <input type="text" name="password" id="password">
+    <br><br>
+    <input type="submit" value="Submit">
+    <br><br>
+    <h2 style="color: red;"></h2>
+
+
+  </form>
+
+  <script>
+  
+  
+  let form = document.querySelector("form");
+  form.onsubmit = (e) =>{
+  let username = document.querySelector("#username").value;
+  let password = document.querySelector("#password").value;
+    let url = "http://localhost:1000";
+    e.preventDefault();
+    let ajax = new XMLHttpRequest();
+    ajax.open("POST",url,true);
+    ajax.send("username="+username+"&password="+password);
+    
+
+    ajax.onreadystatechange = ()=>{
+     if(ajax.readyState == 4){
+         let response = (JSON.parse(ajax.responseText));
+         console.log(response);
+         if (response.msg == "User POST Authenicated"){
+            window.location = "http://localhost:3000"
+         }
+         else{
+            document.querySelector("h2").innerHTML = response.msg
+         }
+     }
+    }
+  }
+  </script>
+    
+</body>
+</html>
